@@ -2,10 +2,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function Todo() {
+function Todo({ task }) {
   return (
     <div className="Todo">
-      <p>Go to school</p>
+      <p>{task.task}</p>
       <div>
         <FontAwesomeIcon icon={faPenToSquare} />
         <FontAwesomeIcon icon={faTrash} />
