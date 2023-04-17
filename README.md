@@ -6,23 +6,24 @@
 https://fontawesome.com/docs/web/use-with/react/
 
 1. Add SVG Core </br>
-npm i --save @fortawesome/fontawesome-svg-core
+   npm i --save @fortawesome/fontawesome-svg-core
 
 2. Add Icon Packages </br>
-npm i --save @fortawesome/free-solid-svg-icons </br>
-npm i --save @fortawesome/free-regular-svg-icons
+   npm i --save @fortawesome/free-solid-svg-icons </br>
+   npm i --save @fortawesome/free-regular-svg-icons
 
 3. Add the React Component </br>
-npm i --save @fortawesome/react-fontawesome@latest
+   npm i --save @fortawesome/react-fontawesome@latest
 
-[todo 데이터 추가] </br>
-1. TodoWrapper 에서 addTodo 함수를 만들어 TodoForm.js로 넘겨주기
+[todo 데이터 추가 및 출력] </br>
+
 ```javascript
 import React, { useState } from "react";
 import TodoForm from "./TodoForm";
 import { v4 as uudiv4 } from "uuid";
 uudiv4();
 
+// TodoWrapper 에서 addTodo 함수를 만들어 TodoForm.js로 넘겨주기
 function TodoWrapper() {
   const [todos, setTodos] = useState([]);
   const addTodo = (todo) => {
@@ -32,18 +33,21 @@ function TodoWrapper() {
     ]);
     console.log(todos);
   };
+
+  // todos.map()을 이용해 Todo.js로 todo 데이터 값 전달해 출력
   return (
     <div className="TodoWrapper">
+      <h1>Get Things Done!</h1>
       <TodoForm addTodo={addTodo} />
+      {todos.map((todo, index) => (
+        <Todo task={todo} key={index} />
+      ))}
     </div>
   );
 }
 
 export default TodoWrapper;
-
 ```
-
-2. 전달받은 addTodo를 이용해 submit한 데이터 값 추가
 
 ```javascript
 import React, { useState } from "react";
@@ -52,6 +56,7 @@ function TodoForm({ addTodo }) {
   const [value, setValue] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
+    // 전달받은 addTodo를 이용해 데이터 값(value) 추가
     addTodo(value);
     setValue("");
   };
@@ -72,5 +77,25 @@ function TodoForm({ addTodo }) {
 }
 
 export default TodoForm;
+```
 
+```javascript
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+
+// 전달받은 todo 데이터 값 표시
+function Todo({ task }) {
+  return (
+    <div className="Todo">
+      <p>{task.task}</p>
+      <div>
+        <FontAwesomeIcon icon={faPenToSquare} />
+        <FontAwesomeIcon icon={faTrash} />
+      </div>
+    </div>
+  );
+}
+
+export default Todo;
 ```
