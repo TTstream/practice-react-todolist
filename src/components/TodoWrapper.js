@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TodoForm from "./TodoForm";
 import { v4 as uudiv4 } from "uuid";
+import Todo from "./Todo";
 uudiv4();
 
 function TodoWrapper() {
@@ -15,6 +16,7 @@ function TodoWrapper() {
   return (
     <div className="TodoWrapper">
       <TodoForm addTodo={addTodo} />
+      <Todo />
     </div>
   );
 }
