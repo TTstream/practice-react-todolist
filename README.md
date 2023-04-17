@@ -9,7 +9,7 @@ https://fontawesome.com/docs/web/use-with/react/
 npm i --save @fortawesome/fontawesome-svg-core
 
 2. Add Icon Packages </br>
-npm i --save @fortawesome/free-solid-svg-icons
+npm i --save @fortawesome/free-solid-svg-icons </br>
 npm i --save @fortawesome/free-regular-svg-icons
 
 3. Add the React Component </br>
