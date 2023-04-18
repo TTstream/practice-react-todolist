@@ -15,6 +15,10 @@ https://fontawesome.com/docs/web/use-with/react/
 3. Add the React Component </br>
    npm i --save @fortawesome/react-fontawesome@latest
 
+[실행화면]
+
+<img src = "https://user-images.githubusercontent.com/76469073/232681882-62e9fab2-8cbc-4ce0-b046-047944d229b3.gif" width="80%">
+
 [Todos Data CRUD] </br>
 
 ```javascript
