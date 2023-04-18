@@ -33,14 +33,26 @@ function TodoWrapper() {
     ]);
     console.log(todos);
   };
-
+  // todos 목록 중 todo 클릭시 todo 완료 이벤트(=토글)
+  const toggleComplete = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              completed: !todo.completed,
+            }
+          : todo
+      )
+    );
+  };
   // todos.map()을 이용해 Todo.js로 todo 데이터 값 전달해 출력
   return (
     <div className="TodoWrapper">
       <h1>Get Things Done!</h1>
       <TodoForm addTodo={addTodo} />
       {todos.map((todo, index) => (
-        <Todo task={todo} key={index} />
+        <Todo task={todo} key={index} toggleComplete={toggleComplete} />
       ))}
     </div>
   );
@@ -84,11 +96,16 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-// 전달받은 todo 데이터 값 표시
-function Todo({ task }) {
+// 전달받은 todo 데이터 값 표시 및 className과 토클 이벤트설정
+function Todo({ task, toggleComplete }) {
   return (
     <div className="Todo">
-      <p>{task.task}</p>
+      <p
+        onClick={() => toggleComplete(task.id)}
+        className={`${task.completed ? "completed" : ""}`}
+      >
+        {task.task}
+      </p>
       <div>
         <FontAwesomeIcon icon={faPenToSquare} />
         <FontAwesomeIcon icon={faTrash} />
