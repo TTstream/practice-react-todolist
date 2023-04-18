@@ -17,7 +17,7 @@ https://fontawesome.com/docs/web/use-with/react/
 
 [실행화면]
 
-<img src = "https://user-images.githubusercontent.com/76469073/232681882-62e9fab2-8cbc-4ce0-b046-047944d229b3.gif" width="80%">
+<img src = "https://user-images.githubusercontent.com/76469073/232683184-ed1c72df-78fd-4ce2-b088-3a6f41bff767.gif" width="80%">
 
 [Todos Data CRUD] </br>
 
