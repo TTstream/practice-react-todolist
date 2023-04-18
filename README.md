@@ -1,7 +1,7 @@
 ## `정리`
 
-[ 출처 ] : https://www.youtube.com/watch?v=LoYbN6qoQHA&t=5s
-
+[ 영상 출처 ] https://www.youtube.com/watch?v=LoYbN6qoQHA&t=5s </br>
+[ CSS ] https://github.com/gbopola/todolist-app-react-js/blob/main/src/App.css</br>
 [ 폰트 사용법 ]
 https://fontawesome.com/docs/web/use-with/react/
 
@@ -15,7 +15,7 @@ https://fontawesome.com/docs/web/use-with/react/
 3. Add the React Component </br>
    npm i --save @fortawesome/react-fontawesome@latest
 
-[todo 데이터 추가 및 출력] </br>
+[Todos Data CRUD] </br>
 
 ```javascript
 import React, { useState } from "react";
@@ -46,19 +46,56 @@ function TodoWrapper() {
       )
     );
   };
+  // todos 목록 중 todo 삭제
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+  // todos 목록 중 todo의 isEditing 요소 true로 변경
+  const editTodo = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              isEditing: !todo.isEditing,
+            }
+          : todo
+      )
+    );
+  };
+  // todos 목록 중 todo값 수정 후 저장시 수정한 값으로 변경 및 idEditing요소 false로 변경
+  const editTask = (task, id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              task: task,
+              isEditing: !todo.isEditing,
+            }
+          : todo
+      )
+    );
+  };
   // todos.map()을 이용해 Todo.js로 todo 데이터 값 전달해 출력
+  // isEditing true이면 EditTodoForm으로 변경
   return (
     <div className="TodoWrapper">
       <h1>Get Things Done!</h1>
       <TodoForm addTodo={addTodo} />
-      {todos.map((todo, index) => (
-        <Todo
-          task={todo}
-          key={index}
-          toggleComplete={toggleComplete}
-          deleteTodo={deleteTodo}
-        />
-      ))}
+      {todos.map((todo, index) =>
+        todo.isEditing ? (
+          <EditTodoForm editTodo={editTask} task={todo} />
+        ) : (
+          <Todo
+            task={todo}
+            key={index}
+            toggleComplete={toggleComplete}
+            deleteTodo={deleteTodo}
+            editTodo={editTodo}
+          />
+        )
+      )}
     </div>
   );
 }
@@ -100,7 +137,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // 전달받은 todo 데이터 값 표시 및 className과 토클 이벤트설정
-function Todo({ task, toggleComplete }) {
+function Todo({ task, toggleComplete, deleteTodo, editTodo }) {
   return (
     <div className="Todo">
       <p
@@ -110,12 +147,44 @@ function Todo({ task, toggleComplete }) {
         {task.task}
       </p>
       <div>
-        <FontAwesomeIcon icon={faPenToSquare} />
-        <FontAwesomeIcon icon={faTrash} />
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          onClick={() => editTodo(task.id)}
+        />
+        <FontAwesomeIcon icon={faTrash} onClick={() => deleteTodo(task.id)} />
       </div>
     </div>
   );
 }
 
 export default Todo;
+```
+
+```javascript
+import React, { useState } from "react";
+
+// isEditing true이면 보여줄 form
+function EditTodoForm({ editTodo, task }) {
+  const [value, setValue] = useState(task.task);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    editTodo(value, task.id);
+  };
+  return (
+    <form className="TodoForm" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={value}
+        className="todo-input"
+        placeholder="Update Task"
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <button type="submit" className="todo-btn">
+        Update Task
+      </button>
+    </form>
+  );
+}
+
+export default EditTodoForm;
 ```
